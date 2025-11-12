@@ -1,0 +1,25 @@
+{
+  "name": "example/currencyrate",
+  "description": "Currency Rate Module for PrestaShop",
+  "license": "AFL-3.0",
+  "type": "prestashop-module",
+  "authors": [
+    {
+      "name": "Paweł Srebniak",
+      "email": "pawel@srebniak.pl"
+    }
+  ],
+  "require": {
+    "php": ">=8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Example\\Module\\CurrencyRate\\": "src/"
+    }
+  },
+  "config": {
+    "prepend-autoloader": false,
+    "optimize-autoloader": true,
+    "sort-packages": true
+  }
+}

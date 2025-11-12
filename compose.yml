@@ -1,0 +1,56 @@
+services:
+    prestashop:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
+        environment:
+            DB_SERVER: mysql
+            DB_NAME: prestashop
+            DB_USER: prestashop
+            DB_PASSWD: prestashop
+            PS_INSTALL_AUTO: 1
+            PS_COUNTRY: PL
+            PS_LANGUAGE: pl
+            PS_CURRENCY: PLN
+            PS_FOLDER_ADMIN: admin-dev
+            PS_FOLDER_INSTALL: install-dev
+            # Memcached configuration
+            PS_CACHING_SYSTEM: CacheMemcache
+            PS_CACHE_ENABLE: 1
+        volumes:
+            - prestashop_data:/var/www/html
+            - ./currencyrate:/var/www/html/modules/currencyrate
+        depends_on:
+            - mysql
+            - memcached
+        networks:
+            - prestashop_network
+
+    mysql:
+        image: mysql:8.0
+        environment:
+            MYSQL_ROOT_PASSWORD: admin
+            MYSQL_DATABASE: prestashop
+            MYSQL_USER: prestashop
+            MYSQL_PASSWORD: prestashop
+        volumes:
+            - mysql_data:/var/lib/mysql
+        networks:
+            - prestashop_network
+
+    memcached:
+        image: memcached:1.6-alpine
+        ports:
+            - "11211:11211"
+        command: memcached -m 128
+        networks:
+            - prestashop_network
+
+volumes:
+    prestashop_data:
+    mysql_data:
+
+networks:
+    prestashop_network:
