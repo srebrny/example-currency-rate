@@ -4,6 +4,9 @@ all:
 
 rebuild: down up
 
+install:
+	docker compose exec prestashop php -d memory_limit=-1 bin/console prestashop:module install currencyrate
+
 down:
 	docker compose down -v
 
