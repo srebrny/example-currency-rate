@@ -1,4 +1,4 @@
-FROM composer:2 as composer
+FROM composer:2 AS composer
 
 FROM prestashop/prestashop:9.0.1
 
